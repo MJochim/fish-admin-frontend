@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Questionnaire data – Example organisation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="assets/css/bootstrap3-stripped-down.minified.css">
+        <link rel="stylesheet" href="assets/css/styles.css">
+
+        <style>
+            .grid-menu > div {
+                background-color: lightgrey;
+                padding: 20px;
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+
+            .grid-menu > div:hover {
+                background-color: darkgrey;
+            }
+
+            @media (min-width:460px) {
+                .grid-menu {
+                    display: grid;
+                    grid-template-columns: 200px 200px;
+                    grid-column-gap: 20px;
+                    grid-row-gap: 10px;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .grid-menu > div {
+                    margin: 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <script src="https://keycloak.example.com/auth/js/keycloak.js"></script>
+
+        <header>
+                <h1>
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" style="width: 0px; height: 100px"> Example organisation
+                </h1>
+        </header>
+
+        <nav id="menu">
+            <ul>
+                <a><li>Overview</li></a>
+
+                <a><li>Password for fish.example.com: <span id="password-container">… loading …</span></li></a>
+            </ul>
+        </nav>
+
+        <div id="content">
+            <div id="container"></div>
+        </div>
+        
+        <footer>
+            © Example organisation
+        </footer>
+
+        <script type="module" src="main.mjs"></script>
+    </body>
+</html>
