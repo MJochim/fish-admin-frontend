@@ -46,21 +46,6 @@ class DataService {
         }
     }
 
-    async getPassword() {
-        await this.refreshBearerToken();
-
-        const response = await fetch (
-            this.apiUrl + "/password",
-	    {headers: {"Authorization": "Bearer " + this.bearerToken}}
-        );
-
-        if (response.status === 403) {
-            return undefined;
-        }
-
-        return await response.json();
-    }
-
     async getQuestionnaireNames() {
         await this.refreshBearerToken();
 
