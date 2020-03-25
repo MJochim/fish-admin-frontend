@@ -56,10 +56,10 @@ const htmlTemplate = `
 `;
 
 class LabelsView {
-    constructor (container, dataService, questionnaireName) {
+    constructor (container, dataService, questionnaireKey) {
         this.container = container;
         this.dataService = dataService;
-        this.name = questionnaireName;
+        this.questionnaireKey = questionnaireKey;
 
         this.labels = [
             "headline",
@@ -78,7 +78,7 @@ class LabelsView {
     async update() {
         this.container.innerHTML = htmlTemplate;
 
-        const labels = await this.dataService.getQuestionnaireLabels(this.name);
+        const labels = await this.dataService.getQuestionnaireLabels(this.questionnaireKey);
 
         for (const label in labels) {
             this.container.querySelector("#input-" + label).value = labels[label];
@@ -104,7 +104,7 @@ class LabelsView {
             labelValues.set(label, value);
         }
 
-        await this.dataService.updateQuestionnaireLabels (this.name, labelValues);
+        await this.dataService.updateQuestionnaireLabels (this.questionnaireKey, labelValues);
         this.update();
     }
 }

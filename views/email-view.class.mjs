@@ -97,10 +97,10 @@ const emailTemplate = {
 
 
 class EmailView {
-    constructor (container, dataService, questionnaireName) {
+    constructor (container, dataService, questionnaireKey) {
         this.container = container;
         this.dataService = dataService;
-        this.questionnaireName = questionnaireName;
+        this.questionnaireKey = questionnaireKey;
 
         this.emails = new Map();
         this.savedValues = null;
@@ -110,7 +110,7 @@ class EmailView {
 
     async update() {
         this.container.innerHTML = "";
-        this.emails = await this.dataService.getQuestionnaireEmails(this.questionnaireName);
+        this.emails = await this.dataService.getQuestionnaireEmails(this.questionnaireKey);
         this.container.innerHTML = htmlTemplate;
 
         this.container.querySelector("#btn-add-email").addEventListener("click", this.addEmail.bind(this));
@@ -133,7 +133,7 @@ class EmailView {
 
         this.container.querySelector("#btn-delete").addEventListener("click", async (event) => {
             const language = this.container.querySelector("#email-selector").value;
-            await this.dataService.deleteQuestionnaireEmail(this.questionnaireName, language);
+            await this.dataService.deleteQuestionnaireEmail(this.questionnaireKey, language);
             this.update();
         });
 
@@ -310,7 +310,7 @@ class EmailView {
         const newLanguage = this.container.querySelector("#input-language").value;
 
         await this.dataService.updateQuestionnaireEmail(
-            this.questionnaireName,
+            this.questionnaireKey,
             this.savedValues.language,
             {
                 language: this.container.querySelector("#input-language").value,

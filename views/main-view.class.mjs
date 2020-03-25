@@ -4,7 +4,7 @@ export {MainView};
 
 const htmlTemplate = `
     <div class="grid-menu" id="admin-panel" style="display: none">
-        <input id="input-new-questionnaire-name" class="form-control">
+        <input id="input-new-questionnaire-key" class="form-control">
         <div id="button-new-questionnaire">New questionnaire</div>
     </div>
 
@@ -19,7 +19,7 @@ class MainView {
         this.dataService = dataService;
         this.menuBar = menuBar;
 
-        this.questionnaireNames = [];
+        this.questionnaireKeys = [];
 
         this.menuBar.querySelector("a:first-child").style.cursor = "pointer";
         this.menuBar.querySelector("a:first-child").addEventListener("click", this.closeQuestionnaire.bind(this));
@@ -36,13 +36,13 @@ class MainView {
 
         this.container.querySelector("#button-new-questionnaire").addEventListener("click", this.handleNewQuestionnaireClick.bind(this));
 
-        this.questionnaireNames = await this.dataService.getQuestionnaireNames();
+        this.questionnaireKeys = await this.dataService.getQuestionnaireKeys();
 
-        for (const questionnaireName of this.questionnaireNames) {
+        for (const questionnaireKey of this.questionnaireKeys) {
             const button = document.createElement("div");
-            button.innerHTML = questionnaireName;
+            button.innerHTML = questionnaireKey;
             button.addEventListener("click", () => {
-                this.openQuestionnaire(questionnaireName);
+                this.openQuestionnaire(questionnaireKey);
             });
             document.querySelector("#list").appendChild(button);
         }
@@ -52,20 +52,20 @@ class MainView {
         this.update();
     }
 
-    openQuestionnaire (name) {
+    openQuestionnaire (key) {
         this.container.querySelector("#list").innerHTML = "";
-        const questionnaireView = new QuestionnaireView(this.container, this.dataService, name);
+        const questionnaireView = new QuestionnaireView(this.container, this.dataService, key);
     }
 
     async handleNewQuestionnaireClick (event) {
-        const input = this.container.querySelector("#input-new-questionnaire-name");
+        const input = this.container.querySelector("#input-new-questionnaire-key");
 
         if (!input.value) {
             input.focus();
         } else if (input.value === "all") {
-            alert("The name 'all' is not allowed in this system.");
-        } else if (this.questionnaireNames.includes(input.value)) {
-            alert("The name " + input.value + " is already taken.");
+            alert("The key 'all' is not allowed in this system.");
+        } else if (this.questionnaireKeys.includes(input.value)) {
+            alert("The key " + input.value + " is already taken.");
         } else {
             event.target.disabled = true;
 

@@ -26,39 +26,39 @@ const htmlTemplate = `
 `;
 
 class QuestionnaireView {
-    constructor (container, dataService, questionnaireName) {
+    constructor (container, dataService, questionnaireKey) {
         this.container = container;
         this.dataService = dataService;
-        this.name = questionnaireName;
+        this.questionnaireKey = questionnaireKey;
 
         this.update();
     }
 
     async update() {
         this.container.innerHTML = htmlTemplate;
-        this.container.querySelector("h1").innerHTML = this.name;
+        this.container.querySelector("h1").innerHTML = this.questionnaireKey;
         this.container.querySelector("#link-back").addEventListener("click", this.update.bind(this));
 
         const subcontainer = this.container.querySelector(".subcontainer");
         
         this.container.querySelector("#btn-email").addEventListener("click", () => {
             this.container.querySelector("#link-back").style.display = "inline";
-            new EmailView(subcontainer, this.dataService, this.name);
+            new EmailView(subcontainer, this.dataService, this.questionnaireKey);
         });
         
         this.container.querySelector("#btn-labels").addEventListener("click", () => {
             this.container.querySelector("#link-back").style.display = "inline";
-            new LabelsView(subcontainer, this.dataService, this.name);
+            new LabelsView(subcontainer, this.dataService, this.questionnaireKey);
         });
         
         this.container.querySelector("#btn-ownership").addEventListener("click", () => {
             this.container.querySelector("#link-back").style.display = "inline";
-            new OwnershipView(subcontainer, this.dataService, this.name);
+            new OwnershipView(subcontainer, this.dataService, this.questionnaireKey);
         });
         
         this.container.querySelector("#btn-data-table").addEventListener("click", () => {
             this.container.querySelector("#link-back").style.display = "inline";
-            window.open("questionnaire-responses.html?conferenceKey=" + encodeURIComponent(this.name));
+            window.open("questionnaire-responses.html?conferenceKey=" + encodeURIComponent(this.questionnaireKey));
         });
     }
 }

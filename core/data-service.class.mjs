@@ -46,7 +46,7 @@ class DataService {
         }
     }
 
-    async getQuestionnaireNames() {
+    async getQuestionnaireKeys() {
         await this.refreshBearerToken();
 
         const response = await fetch (
@@ -58,12 +58,12 @@ class DataService {
 
         return allVisibileQuestionnaires
             .filter(x => x.admin === true)
-            .map(x => x.name);
+            .map(x => x.key);
     }
 
-    async createQuestionnaire(questionnaireName) {
+    async createQuestionnaire(questionnaireKey) {
         const form = new FormData();
-        form.set("questionnaireName", questionnaireName);
+        form.set("questionnaireKey", questionnaireKey);
 
         await this.refreshBearerToken();
 
@@ -79,29 +79,29 @@ class DataService {
         return await response.json();
     }
 
-    async getQuestionnaireResponses(questionnaireName) {
+    async getQuestionnaireResponses(questionnaireKey) {
         await this.refreshBearerToken();
 
         const response = await fetch (
-            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireName) + "/responses",
+            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireKey) + "/responses",
 	    {headers: {"Authorization": "Bearer " + this.bearerToken}}
         );
 
         return await response.json();
     }
 
-    async getQuestionnaireLabels(questionnaireName) {
+    async getQuestionnaireLabels(questionnaireKey) {
         await this.refreshBearerToken();
 
         const response = await fetch (
-            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireName) + "/labels",
+            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireKey) + "/labels",
 	    {headers: {"Authorization": "Bearer " + this.bearerToken}}
         );
 
         return await response.json();
     }
 
-    async updateQuestionnaireLabels(questionnaireName, labels) {
+    async updateQuestionnaireLabels(questionnaireKey, labels) {
         const form = new FormData();
         for (const label of labels) {
             form.set(label[0], label[1]);
@@ -110,7 +110,7 @@ class DataService {
         await this.refreshBearerToken();
 
         const response = await fetch (
-            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireName) + "/labels",
+            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireKey) + "/labels",
 	    {
                 method: "PATCH",
                 headers: {"Authorization": "Bearer " + this.bearerToken},
@@ -121,11 +121,11 @@ class DataService {
         return await response.json();
     }
 
-    async getQuestionnaireEmails(questionnaireName) {
+    async getQuestionnaireEmails(questionnaireKey) {
         await this.refreshBearerToken();
 
         const response = await fetch (
-            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireName) + "/emails",
+            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireKey) + "/emails",
 	    {headers: {"Authorization": "Bearer " + this.bearerToken}}
         );
 
@@ -139,7 +139,7 @@ class DataService {
         return result;
     }
 
-    async updateQuestionnaireEmail(questionnaireName, language, email) {
+    async updateQuestionnaireEmail(questionnaireKey, language, email) {
         const form = new FormData();
         form.set("language", email.language);
         form.set("subject", email.subject);
@@ -150,7 +150,7 @@ class DataService {
         await this.refreshBearerToken();
 
         const response = await fetch (
-            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireName) + "/emails/" + encodeURIComponent(language),
+            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireKey) + "/emails/" + encodeURIComponent(language),
 	    {
                 method: "PATCH",
                 headers: {"Authorization": "Bearer " + this.bearerToken},
@@ -161,11 +161,11 @@ class DataService {
         return await response.json();
     }
 
-    async deleteQuestionnaireEmail(questionnaireName, language) {
+    async deleteQuestionnaireEmail(questionnaireKey, language) {
         await this.refreshBearerToken();
 
         const response = await fetch (
-            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireName) + "/emails/" + encodeURIComponent(language),
+            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireKey) + "/emails/" + encodeURIComponent(language),
 	    {
                 method: "DELETE",
                 headers: {"Authorization": "Bearer " + this.bearerToken}
