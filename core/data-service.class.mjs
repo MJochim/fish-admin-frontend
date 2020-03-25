@@ -54,7 +54,11 @@ class DataService {
 	    {headers: {"Authorization": "Bearer " + this.bearerToken}}
         );
 
-        return await response.json();
+        const allVisibileQuestionnaires = await response.json();
+
+        return allVisibileQuestionnaires
+            .filter(x => x.admin === true)
+            .map(x => x.name);
     }
 
     async createQuestionnaire(questionnaireName) {
