@@ -14,6 +14,12 @@ const accessDeniedTemplate = `
         const container = document.querySelector("#container");
         const menuBar = document.querySelector("#menu");
         const mainView = new MainView(container, dataService, menuBar);
+
+        const logoutButton = document.querySelector("#logout");
+        logoutButton.style.cursor = "pointer";
+        logoutButton.addEventListener("click", (event) => {
+            dataService.logout();
+        });
     } else {
         const container = document.querySelector("#container");
         container.innerHTML = accessDeniedTemplate;

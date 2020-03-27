@@ -24,6 +24,10 @@ class DataService {
         this.bearerToken = this.keycloak.token;
     }
 
+    async logout() {
+        await this.keycloak.logout();
+    }
+
     amIUser() {
         try {
             // The resource_access isn't always present, which is why we catch excptions.
