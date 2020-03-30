@@ -1,6 +1,7 @@
 import {EmailView} from "./email-view.class.mjs";
 import {LabelsView} from "./labels-view.class.mjs";
 import {OwnershipView} from "./ownership-view.class.mjs";
+import {PropertiesView} from "./properties-view.class.mjs";
 
 export {QuestionnaireView};
 
@@ -20,6 +21,7 @@ const htmlTemplate = `
             <div id="btn-email">Confirmation emails</div>
             <div id="btn-labels">Labels</div>
             <div id="btn-ownership">Ownership</div>
+            <div id="btn-properties">Properties</div>
             <div id="btn-data-table">Data table</div>
         </div>
     </div>
@@ -56,9 +58,15 @@ class QuestionnaireView {
             new OwnershipView(subcontainer, this.dataService, this.questionnaireKey);
         });
         
+        this.container.querySelector("#btn-properties").addEventListener("click", () => {
+            this.container.querySelector("#link-back").style.display = "inline";
+            new PropertiesView(subcontainer, this.dataService, this.questionnaireKey);
+        });
+
         this.container.querySelector("#btn-data-table").addEventListener("click", () => {
             this.container.querySelector("#link-back").style.display = "inline";
             window.open("questionnaire-responses.html?conferenceKey=" + encodeURIComponent(this.questionnaireKey));
         });
     }
 }
+

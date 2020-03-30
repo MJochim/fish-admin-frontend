@@ -125,6 +125,37 @@ class DataService {
         return await response.json();
     }
 
+    async getQuestionnaireProperties(questionnaireKey) {
+        await this.refreshBearerToken();
+
+        const response = await fetch (
+            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireKey) + "/properties",
+	    {headers: {"Authorization": "Bearer " + this.bearerToken}}
+        );
+
+        return await response.json();
+    }
+
+    async updateQuestionnaireProperties(questionnaireKey, properties) {
+        const form = new FormData();
+        for (const property of properties) {
+            form.set(property[0], property[1]);
+        }
+
+        await this.refreshBearerToken();
+
+        const response = await fetch (
+            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireKey) + "/properties",
+	    {
+                method: "PATCH",
+                headers: {"Authorization": "Bearer " + this.bearerToken},
+                body: form
+            }
+        );
+
+        return await response.json();
+    }
+
     async getQuestionnaireEmails(questionnaireKey) {
         await this.refreshBearerToken();
 
