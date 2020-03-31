@@ -209,4 +209,18 @@ class DataService {
 
         return await response.json();
     }
+
+    async deleteQuestionnaire(questionnaireKey) {
+        await this.refreshBearerToken();
+
+        const response = await fetch (
+            this.apiUrl + "/questionnaires/" + encodeURIComponent(questionnaireKey),
+	    {
+                method: "DELETE",
+                headers: {"Authorization": "Bearer " + this.bearerToken}
+            }
+        );
+
+        return await response.json();
+    }
 }

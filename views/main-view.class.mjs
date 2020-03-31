@@ -54,7 +54,7 @@ class MainView {
 
     openQuestionnaire (key) {
         this.container.querySelector("#list").innerHTML = "";
-        const questionnaireView = new QuestionnaireView(this.container, this.dataService, key);
+        const questionnaireView = new QuestionnaireView(this.container, this.dataService, this.closeQuestionnaire.bind(this), key);
     }
 
     async handleNewQuestionnaireClick (event) {
