@@ -20,6 +20,11 @@ const htmlTemplate = `
             <td>Picture URL</td>
             <td><input class="form-control" id="input-pictureUrl"></td>
         </tr>
+
+        <tr>
+            <td>Public</td>
+            <td><input type="checkbox" id="input-public"></td>
+        </tr>
     </table>
 
     <button id="btn-submit" class="btn btn-primary">Save</button>
@@ -36,6 +41,10 @@ class PropertiesView {
             "pictureUrl"
         ];
 
+        this.booleanProperties = [
+            "public"
+        ];
+
         this.update();
     }
 
@@ -45,7 +54,11 @@ class PropertiesView {
         const properties = await this.dataService.getQuestionnaireProperties(this.questionnaireKey);
 
         for (const property in properties) {
-            this.container.querySelector("#input-" + property).value = properties[property];
+            if (this.booleanProperties.includes(property)) {
+                this.container.querySelector("#input-" + property).checked = properties[property];
+            } else  {
+                this.container.querySelector("#input-" + property).value = properties[property];
+            }
         }
 
         this.container.querySelector("#btn-submit").addEventListener("click", this.save.bind(this));
@@ -66,6 +79,11 @@ class PropertiesView {
         for (const property of this.properties) {
             const value = this.container.querySelector("#input-" + property).value;
             propertyValues.set(property, value);
+        }
+
+        for (const booleanProperty of this.booleanProperties) {
+            const value = this.container.querySelector("#input-" + booleanProperty).checked;
+            propertyValues.set(booleanProperty, value);
         }
 
         await this.dataService.updateQuestionnaireProperties (this.questionnaireKey, propertyValues);
